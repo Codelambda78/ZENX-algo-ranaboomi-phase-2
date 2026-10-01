@@ -12,9 +12,17 @@ This script never reads ``private/``, and refuses an output path that tries.
 
 from __future__ import annotations
 
+import sys
+
 import _paths  # noqa: F401
 from _cli import CLI
 from benchkit.cli import run_main
 
 if __name__ == "__main__":
-    raise SystemExit(run_main(CLI))
+    arguments = sys.argv[1:]
+    if not arguments:
+        arguments = [
+            "--adapter", "adapters.mine:Scheduler",
+            "--out", "report_mine_run.json",
+        ]
+    raise SystemExit(run_main(CLI, arguments))
